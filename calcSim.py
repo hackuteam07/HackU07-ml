@@ -39,11 +39,11 @@ class CalcSim():
     title = self.tagger.parse(target)[:-1]
     scores = self.rouge.get_scores(summery,title)
 
-    result = self.convert(result["scores"][0]["rouge-l"]["f"])
-    return scores
+    result = self.convert(scores[0]["rouge-l"]["f"])
+    return result
 
-  def convert(x):
-    d = 1+math.exp(-10*(x-0.2))
+  def convert(self,x):
+    d = 1+math.exp(-10*(x-0.1))
     return 1/d
 
 
