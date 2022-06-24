@@ -1,6 +1,7 @@
 
 from rouge import Rouge
 import MeCab as mc
+import math
 
 
 class CalcSim():
@@ -37,15 +38,24 @@ class CalcSim():
     summery = self.tagger.parse(output)[:-1]
     title = self.tagger.parse(target)[:-1]
     scores = self.rouge.get_scores(summery,title)
+
+    result = self.convert(result["scores"][0]["rouge-l"]["f"])
     return scores
+
+  def convert(x):
+    d = 1+math.exp(-10*(x-0.2))
+    return 1/d
+
 
   def make_output(self,input,target):
     """
     input : 記事本文
     target : オリジナルタイトル
     """
+    input = ''.join(input.split())
+    target = '。'.join(target.split())
     output_text = self.generate_summary(input)
-    socres = self.calc_score(output_text,target)
+    score = self.calc_score(output_text,target)
 
-    return {"original_title" : target,"generated_title": output_text,"scores" : socres}
+    return score
 
