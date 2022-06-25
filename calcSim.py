@@ -43,7 +43,7 @@ class CalcSim():
     return result
 
   def convert(self,x):
-    d = 1+math.exp(-10*(x-0.1))
+    d = 1 + math.exp(-10*(x-0.1))
     return 1/d
 
 
