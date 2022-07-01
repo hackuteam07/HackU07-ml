@@ -31,7 +31,7 @@ class CalcSim():
             )
 
     output_text = [self.tokenizer.decode(ids, skip_special_tokens=True, clean_up_tokenization_spaces=False) for ids in output]
-
+    #print(output_text[0])
     return output_text[0]
 
   def calc_score(self,output,target):
@@ -46,7 +46,6 @@ class CalcSim():
     d = 1 + math.exp(-10*(x-0.1))
     return 1/d
 
-
   def make_output(self,input,target):
     """
     input : 記事本文
@@ -54,8 +53,9 @@ class CalcSim():
     """
     input = ''.join(input.split())
     target = '。'.join(target.split())
-    output_text = self.generate_summary(input)
-    score = self.calc_score(output_text,target)
+    output_title = self.generate_summary(input)
+    print(output_title)
+    score = self.calc_score(output_title,target)
 
     return score
 
