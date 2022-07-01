@@ -20,18 +20,17 @@
 - モデルディレクトリパスを変更するときは`setup.py`の`MODEL_DIR`を変更してください
 ```python
 from setup import *
-from calcSim import *
-
 import torch
 from torch.utils.data import Dataset, DataLoader
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 
 #　モデルの読み込み部分
-tokenizer = T5Tokenizer.from_pretrained(MODEL_DIR, is_fast=True)
+tokenizer = T5Tokenizer.from_pretrained(MODEL_DIR, is_fast=True,model_max_length=args.max_input_length)
 trained_model = T5ForConditionalGeneration.from_pretrained(MODEL_DIR)
 ```
 
-## その他
-- スコアが複数出てくるがこれは今後絞っていく予定
-- generate_title.ipynbを見てもらえれば大体何をやっているかわかるかも？
-- 疑問点があったら山根まで
+## 処理実態
+- T5日本語事前学習モデルをwikihowデータを用いて要約タスクへとファインチューニング
+- チューニング済みモデルを用いてニュース本文からタイトルを生成
+- モデルの出力が正解と見做し実際のタイトルとモデルタイトルのrouge-lスコアの計算
+
